@@ -1,0 +1,96 @@
+-r
+G:\C++\PPO\lab8\Лаб8\My Amplifier XE Results - Лаб8\r000hs
+--data-limit-mb=500
+--stack-stitching
+--follow-child
+--itt-config=frame
+--itt-config=task,event
+--stackwalk=offline
+--type=cswitch
+--mrte-mode=native
+--type=cpu:counters:nostack
+--type=cpu:stack
+--interval=10
+--etw-config=dma,frames
+--search-dir
+sym=G:\C++\PPO\lab8\Debug
+--search-dir
+sym=G:\C++\PPO\lab8
+--search-dir
+bin=G:\C++\PPO\lab8\Debug
+--search-dir
+bin=G:\C++\PPO\lab8
+--search-dir
+bin=G:/C++\PPO\lab8\Лаб8\$(VC_ExecutablePath_x86)
+--search-dir
+bin=G:/C++\PPO\lab8\Лаб8\$(WindowsSDK_ExecutablePath)
+--search-dir
+bin=G:/C++\PPO\lab8\Лаб8\$(VS_ExecutablePath)
+--search-dir
+bin=G:/C++\PPO\lab8\Лаб8\$(MSBuild_ExecutablePath)
+--search-dir
+bin=C:\Windows\SysWow64
+--search-dir
+bin=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Team Tools\Static Analysis Tools\FxCop
+--search-dir
+bin=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\NativeBinaries\x86
+--search-dir
+bin=C:\ProgramData\Oracle\Java\javapath
+--search-dir
+bin=C:\Program Files (x86)\CollabNet
+--search-dir
+bin=C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin
+--search-dir
+bin=C:\Users\Public\Documents\RAD Studio\12.0\Bpl
+--search-dir
+bin=C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin64
+--search-dir
+bin=C:\Users\Public\Documents\RAD Studio\12.0\Bpl\Win64
+--search-dir
+bin=C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
+--search-dir
+bin=C:\Program Files (x86)\Intel\iCLS Client
+--search-dir
+bin=C:\Program Files\Intel\iCLS Client
+--search-dir
+bin=C:\Program Files\Common Files\Microsoft Shared\Windows Live
+--search-dir
+bin=C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live
+--search-dir
+bin=C:\Windows\system32
+--search-dir
+bin=C:\Windows
+--search-dir
+bin=C:\Windows\System32\Wbem
+--search-dir
+bin=C:\Windows\System32\WindowsPowerShell\v1.0
+--search-dir
+bin=C:\Program Files (x86)\Windows Live\Shared
+--search-dir
+bin=C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86
+--search-dir
+bin=C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64
+--search-dir
+bin=C:\Program Files\Intel\Intel(R) Management Engine Components\DAL
+--search-dir
+bin=C:\Program Files\Intel\Intel(R) Management Engine Components\IPT
+--search-dir
+bin=C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL
+--search-dir
+bin=C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT
+--search-dir
+bin=C:\Program Files (x86)\PascalFree\bin\i386-Win32
+--search-dir
+bin=C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit
+--search-dir
+bin=C:\Program Files\Microsoft SQL Server\110\Tools\Binn
+--search-dir
+bin=C:\Program Files\Microsoft\Web Platform Installer
+--search-dir
+bin=C:\Program Files\Microsoft SQL Server\120\Tools\Binn
+--search-dir
+bin=C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0
+--
+G:\C++\PPO\lab8\Debug\Лаб8.exe
+input.js
+output.js
