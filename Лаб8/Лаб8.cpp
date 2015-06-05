@@ -41,6 +41,32 @@ __int64 SummVec(vector<__int64> vect)
 	return summ;
 }
 
+void fillTestsFirst(vector<string> &testInData, vector<string> &testOutData)
+{
+	testInData.push_back("alert(\"Hello /* abc */ \"); // Comment");
+	testInData.push_back("alert(\" // Test \"); // Comment");
+	testInData.push_back("// 12345 \" qwerty \" ");
+	testInData.push_back(" test(); // abc");
+	testInData.push_back("/* 12345 */");
+	testInData.push_back(" a = 2; /* line 1");
+	testInData.push_back(" line 2 ");
+	testInData.push_back(" line 3 */ rest();");
+	testInData.push_back("line /*");
+	testInData.push_back("line /*");
+	testInData.push_back("line /*");
+
+	testOutData.push_back("alert(\"Hello /* abc */ \"); ");
+	testOutData.push_back("alert(\" // Test \"); ");
+	testOutData.push_back("");
+	testOutData.push_back(" test(); ");
+	testOutData.push_back("");
+	testOutData.push_back(" a = 2; ");
+	testOutData.push_back("");
+	testOutData.push_back(" rest();");
+	testOutData.push_back("line ");
+	testOutData.push_back("");
+	testOutData.push_back("");
+}
 map<string, int> FindCommonWord(string line)
 {
 	__int64 begin = GetMicroTickCount();
@@ -163,15 +189,49 @@ char* DeletedComment(char* str)
 			*CopySymbol++;
 		*CommentSymbol++;
 	}
-	cout << begin;
+	/*cout << begin;*/
 	vec_del.push_back(GetMicroTickCount() - begin);
 	return t;
 }
 
 
+bool unitTest(vector<string> & testInData, vector<string> const & testOutData)
+{
+	vector<string> testInResult;
+	char str[100];
+	for (auto elem : testInData)
+	{
+		memset(str, 0, sizeof(str));
+		strncpy(str, elem.c_str(), sizeof(str) - 1);
+		testInResult.push_back(DeletedComment(str));
+	}
+
+	for (size_t i = 0; i < testInData.size(); ++i)
+	{
+		if (testInResult[i] != testOutData[i]){
+			cout << "Error";
+			return false;
+		}
+		++i;
+	}
+
+	cout << "ok" << endl;
+	return true;
+}
+
 int main(int argc, char* argv[])
 {
 	Init();
+	vector<string> testInData;
+	vector<string> testOutData;
+
+	fillTestsFirst(testInData, testOutData);
+	if (!unitTest(testInData, testOutData))
+	{
+		return 1;
+	}
+
+
 	__int64 begin = GetMicroTickCount();
 	if (argc != 3) {
 		printf("Usage: lab1 [input file] [output file] \n");
@@ -230,7 +290,7 @@ int main(int argc, char* argv[])
 
 	map<string, int> MassOfWord;
 	MassOfWord = FindCommonWord(delete_line);
-	system("cls");
+	/*system("cls");*/
 	__int64 summ = SummVec(vec_del);
 	__int64 average = summ / vec_del.size();
 	//for (size_t i = 0; i < vec_del.size(); i++)
@@ -247,7 +307,6 @@ int main(int argc, char* argv[])
 	cout << "Average time of DeletedComment function(mcs): " << average << endl;
 	cout << "Total time of SummVec function(mcs) : " << g_summVecTime << endl;
 	cout << "Total time of program(mcs): " << res << endl;
-	system("pause");
 	return 0;
 }
 
