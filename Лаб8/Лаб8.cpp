@@ -208,11 +208,11 @@ bool unitTest(vector<string> & testInData, vector<string> const & testOutData)
 
 	for (size_t i = 0; i < testInData.size(); ++i)
 	{
-		if (testInResult[i] != testOutData[i]){
+		if (testInResult[i] != testOutData[i])
+		{
 			cout << "Error";
 			return false;
 		}
-		++i;
 	}
 
 	cout << "ok" << endl;
