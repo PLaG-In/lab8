@@ -129,26 +129,27 @@ char* ShowDictionary(map<string, int> Dictionary)
 	return Result;
 }
 
-char* DeletedComment(char* str)
+string DeletedComment(string str)
 {
 	__int64 begin = GetMicroTickCount();
-	assert(str);
-	char* t = str;
+	string t;
 	char* CopySymbol;
-	char* CommentSymbol = CopySymbol = str;
+	char* CommentSymbol = CopySymbol = strdup(str.c_str());
 
-	while (*CopySymbol != 0)
+	for (size_t i = 0; i < str.length(); ++i) 
 	{
 		*CopySymbol = *CommentSymbol;
 
 		if ((*CommentSymbol == '(') && (*(CommentSymbol + 1) == '"'))
 		{
 			FlagBrackets = true;
+			t += *CopySymbol;
 			*CopySymbol++;
 		}
 		else if ((*(CommentSymbol + 1) == ')') && ((*CommentSymbol == '"')))
 		{
 			FlagBrackets = false;
+			t += *CopySymbol;
 			*CopySymbol++;
 		}
 		else if ((*CommentSymbol == '/') && (*(CommentSymbol + 1) == '/') && FlagBrackets != true) // удаляем однострочные коментарии
@@ -186,7 +187,10 @@ char* DeletedComment(char* str)
 			*CommentSymbol++;
 		}
 		else
+		{
+			t += *CopySymbol;
 			*CopySymbol++;
+		}
 		*CommentSymbol++;
 	}
 	/*cout << begin;*/
@@ -194,18 +198,39 @@ char* DeletedComment(char* str)
 	return t;
 }
 
+void unit_test_for_delete_comment()
+{
+	vector<string> tests;
+	tests.reserve(9);
+	tests.push_back(DeletedComment("normal string"));
+	tests.push_back(DeletedComment("line comment here ===>//try"));
+	tests.push_back(DeletedComment("//must show nothing"));
+	tests.push_back(DeletedComment("comment===>/*jgbfkjg*/"));
+	tests.push_back(DeletedComment("/*FIFtH*/<===comment"));
+	tests.push_back(DeletedComment("comment with lcomment inside===>/*jnfjgfgkm//nkgmfklg*/"));
+	tests.push_back(DeletedComment("\t(\" // Test \")jkkk"));
+	tests.push_back(DeletedComment(""));
+	tests.push_back(DeletedComment("lc===>//j/*j*/q/*jj*/"));
+
+	assert(!strcmp(tests[0].c_str(), "normal string"));
+	assert(!strcmp(tests[1].c_str(), "line comment here ===>"));
+	assert(!strcmp(tests[2].c_str(), ""));
+	assert(!strcmp(tests[3].c_str(), "comment===>"));
+	assert(!strcmp(tests[4].c_str(), "<===comment"));
+	assert(!strcmp(tests[5].c_str(), "comment with lcomment inside===>"));
+	assert(!strcmp(tests[6].c_str(), "\t(\" // Test \")jkkk"));
+	assert(!strcmp(tests[7].c_str(), ""));
+	assert(!strcmp(tests[8].c_str(), "lc===>"));
+	printf("Success\n");
+}
 
 bool unitTest(vector<string> & testInData, vector<string> const & testOutData)
 {
 	vector<string> testInResult;
-	char str[100];
 	for (auto elem : testInData)
 	{
-		memset(str, 0, sizeof(str));
-		strncpy(str, elem.c_str(), sizeof(str) - 1);
-		testInResult.push_back(DeletedComment(str));
+		testInResult.push_back(DeletedComment(elem));
 	}
-
 	for (size_t i = 0; i < testInData.size(); ++i)
 	{
 		if (testInResult[i] != testOutData[i])
@@ -214,7 +239,6 @@ bool unitTest(vector<string> & testInData, vector<string> const & testOutData)
 			return false;
 		}
 	}
-
 	cout << "ok" << endl;
 	return true;
 }
@@ -222,15 +246,15 @@ bool unitTest(vector<string> & testInData, vector<string> const & testOutData)
 int main(int argc, char* argv[])
 {
 	Init();
+	unit_test_for_delete_comment();
 	vector<string> testInData;
-	vector<string> testOutData;
-
-	fillTestsFirst(testInData, testOutData);
-	if (!unitTest(testInData, testOutData))
-	{
-		return 1;
-	}
-
+	//vector<string> testOutData;
+	//
+	//fillTestsFirst(testInData, testOutData);
+	//if (!unitTest(testInData, testOutData))
+	//{
+	//	return 1;
+	//}
 
 	__int64 begin = GetMicroTickCount();
 	if (argc != 3) {
@@ -266,10 +290,7 @@ int main(int argc, char* argv[])
 			getline(input, line);
 			text += line;
 			text += "\n";
-			cstr = new char[text.length() + 1];
-			strcpy_s(cstr, text.length() + 1, text.c_str());
-			DeletedComment(cstr);
-			a.push_back(cstr);
+			a.push_back(DeletedComment(text));
 			text = "";
 		}
 		input.close();
@@ -291,8 +312,8 @@ int main(int argc, char* argv[])
 	map<string, int> MassOfWord;
 	MassOfWord = FindCommonWord(delete_line);
 	/*system("cls");*/
-	__int64 summ = SummVec(vec_del);
-	__int64 average = summ / vec_del.size();
+	/*__int64 summ = SummVec(vec_del);*/
+	/*__int64 average = summ / vec_del.size();*/
 	//for (size_t i = 0; i < vec_del.size(); i++)
 	//{
 	//	cout << vec_del[i] << " ";
@@ -301,12 +322,12 @@ int main(int argc, char* argv[])
 	input.close();
 	__int64 res = (GetMicroTickCount() - begin);
 	cout << "The most used word is: " << ShowDictionary(MassOfWord) << endl;
-	cout << "Total time of ShowDictionary function(mcs) : " << g_showTime << endl;
+	/*cout << "Total time of ShowDictionary function(mcs) : " << g_showTime << endl;
 	cout << "Total time of FindCommonWord function(mcs) : " << g_findTime << endl;
 	cout << "Total time of DeletedComment function(mcs): " << summ << endl;
 	cout << "Average time of DeletedComment function(mcs): " << average << endl;
 	cout << "Total time of SummVec function(mcs) : " << g_summVecTime << endl;
-	cout << "Total time of program(mcs): " << res << endl;
+	cout << "Total time of program(mcs): " << res << endl;*/
 	return 0;
 }
 
